@@ -1,0 +1,10 @@
+{
+	"manifest_version": 2,
+	"name": "Mute Controller",
+	"version": "1.0.0",
+	"browser_action": {
+		"default_popup": "index.html",
+		"default_title": "Tabs"
+	},
+	"permissions": ["activeTab", "tabs"]
+}
