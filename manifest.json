@@ -4,7 +4,8 @@
 	"version": "1.0.0",
 	"browser_action": {
 		"default_popup": "index.html",
-		"default_title": "Tabs"
+		"default_title": "Tabs",
+		"default_icon": "icon.png"
 	},
 	"permissions": ["activeTab", "tabs"]
 }

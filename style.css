@@ -5,10 +5,11 @@
 body {
 	width: 300px;
 	border-radius: 10px;
+	background-color: #073b4c;
 }
 
 .container {
-	padding: 10px 10px 0 10px;
+	padding: 15px 15px 0 15px;
 }
 
 .tab-item {
@@ -16,18 +17,23 @@ body {
 	align-items: center;
 	justify-content: space-between;
 	padding: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	border-radius: 10px;
-	background-color: aqua;
+	background-color: #ffd166;
+	box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+	height: 25px;
 }
 
 .tab-title {
 	margin-right: 10px;
 	font-size: 14px;
 	font-weight: 600;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-.mute-toogle {
+.mute-toggle {
 	border: none;
 	width: 40px;
 	height: 25px;
@@ -36,13 +42,14 @@ body {
 	color: white;
 	min-width: 40px;
 	min-height: 25px;
+	background-color: #06d6a0;
 }
 
-.mute-toogle:hover {
+.mute-toggle:hover {
 	cursor: pointer;
 }
 
-.mute-toogle:active {
+.mute-toggle:active {
 	box-shadow: none;
 }
 
