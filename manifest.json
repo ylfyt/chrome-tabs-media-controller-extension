@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-	"name": "Mute Controller",
+	"name": "Tabs Audio Controller",
 	"version": "1.0.0",
 	"browser_action": {
 		"default_popup": "index.html",
