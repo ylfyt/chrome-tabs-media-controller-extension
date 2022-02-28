@@ -7,5 +7,5 @@
 		"default_title": "Tabs",
 		"default_icon": "icon.png"
 	},
-	"permissions": ["activeTab", "tabs"]
+	"permissions": ["activeTab", "tabs", "<all_urls>"]
 }

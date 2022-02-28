@@ -7,14 +7,42 @@ const toggleMute = (tabId) => {
 	});
 };
 
+const togglePlay = (tabId) => {
+	const id = tabId.substring(2, tabId.length);
+	chrome.tabs.executeScript(parseInt(id), { code: `document.getElementsByClassName('ytp-play-button')[0].click();` });
+	document.getElementById(tabId).classList.toggle('inactive');
+};
+
 const getHtml = (tab) => {
 	let temp = '';
 	if (tab.mutedInfo.muted) {
 		temp = 'inactive';
 	}
 
-	const txt = `<div class="tab-item"><div class="tab-title">${tab.title}</div>
-	<button id="${tab.id}" type="button" class="mute-toggle ${temp}">M</button>
+	const txt = `
+	<div class="tab-item">
+		<div class="tab-title">${tab.title}</div>
+		
+		<div class="button-container">
+			<button id="${tab.id}" type="button" class="mute-toggle ${temp}">M</button>
+		</div>
+	</div>`;
+	return txt;
+};
+
+const getHtmlForYT = (tab) => {
+	let temp = '';
+	if (tab.mutedInfo.muted) {
+		temp = 'inactive';
+	}
+
+	const txt = `
+	<div class="tab-item">
+		<div class="tab-title">${tab.title}</div>
+		<div class="button-container">
+			<button id="p:${tab.id}" type="button" class="play-toggle ${temp}">P</button>
+			<button id="${tab.id}" type="button" class="mute-toggle ${temp}">M</button>
+		</div>
 	</div>`;
 	return txt;
 };
@@ -24,7 +52,11 @@ var tabsContainer = document.getElementById('tabs');
 chrome.tabs.query({}, function (tabs) {
 	for (let i = 0; i < tabs.length; i++) {
 		const tab = tabs[i];
-		tabsContainer.innerHTML += getHtml(tab);
+		if (tab.url.includes('youtube.com')) {
+			tabsContainer.innerHTML += getHtmlForYT(tab);
+		} else {
+			tabsContainer.innerHTML += getHtml(tab);
+		}
 	}
 
 	const buttons = document.getElementsByClassName('mute-toggle');
@@ -32,6 +64,14 @@ chrome.tabs.query({}, function (tabs) {
 		const button = buttons[i];
 		button.addEventListener('click', () => {
 			toggleMute(button.id);
+		});
+	}
+
+	const buttonsPlay = document.getElementsByClassName('play-toggle');
+	for (let i = 0; i < buttonsPlay.length; i++) {
+		const button = buttonsPlay[i];
+		button.addEventListener('click', () => {
+			togglePlay(button.id);
 		});
 	}
 });

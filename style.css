@@ -12,6 +12,10 @@ body {
 	padding: 15px 15px 0 15px;
 }
 
+.button-container {
+	display: flex;
+}
+
 .tab-item {
 	display: flex;
 	align-items: center;
@@ -43,6 +47,27 @@ body {
 	min-width: 40px;
 	min-height: 25px;
 	background-color: #06d6a0;
+}
+
+.play-toggle {
+	border: none;
+	width: 40px;
+	height: 25px;
+	box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	color: white;
+	min-width: 40px;
+	min-height: 25px;
+	background-color: #06d6a0;
+	margin-right: 10px;
+}
+
+.play-toggle:hover {
+	cursor: pointer;
+}
+
+.play-toggle:active {
+	box-shadow: none;
 }
 
 .mute-toggle:hover {
