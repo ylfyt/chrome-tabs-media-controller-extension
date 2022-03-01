@@ -9,7 +9,21 @@ const toggleMute = (tabId) => {
 
 const togglePlay = (tabId) => {
 	const id = tabId.substring(2, tabId.length);
-	chrome.tabs.executeScript(parseInt(id), { code: `document.getElementsByClassName('ytp-play-button')[0].click();` });
+	chrome.tabs.executeScript(parseInt(id), {
+		code: `
+			document.dispatchEvent(
+				new KeyboardEvent('keydown', {
+					key: 'k',
+					keyCode: 75,
+					code: 'KeyK',
+					which: 75,
+					shiftKey: false,
+					ctrlKey: false,
+					metaKey: false,
+				})
+			);	
+		`,
+	});
 	document.getElementById(tabId).classList.toggle('inactive');
 };
 
