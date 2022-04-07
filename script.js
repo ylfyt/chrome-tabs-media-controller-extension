@@ -51,7 +51,7 @@ const getHtmlForYT = (tab) => {
 	}
 
 	const txt = `
-	<div class="tab-item">
+	<div class="tab-item youtube-item">
 		<div class="tab-title">${tab.title}</div>
 		<div class="button-container">
 			<button id="p:${tab.id}" type="button" class="play-toggle ${temp}">P</button>
@@ -66,7 +66,7 @@ var tabsContainer = document.getElementById('tabs');
 chrome.tabs.query({}, function (tabs) {
 	for (let i = 0; i < tabs.length; i++) {
 		const tab = tabs[i];
-		if (tab.url.includes('youtube.com')) {
+		if (tab.url.includes('youtube.com/watch?v=')) {
 			tabsContainer.innerHTML += getHtmlForYT(tab);
 		} else {
 			tabsContainer.innerHTML += getHtml(tab);

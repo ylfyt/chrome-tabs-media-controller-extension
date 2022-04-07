@@ -28,6 +28,10 @@ body {
 	height: 25px;
 }
 
+.youtube-item {
+	background-color: #ff1e56;
+}
+
 .tab-title {
 	margin-right: 10px;
 	font-size: 14px;
@@ -83,5 +87,5 @@ body {
 }
 
 .inactive {
-	background-color: #ef476f;
+	background-color: #969797;
 }
