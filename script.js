@@ -2,21 +2,44 @@ const toggleMute = (tabId) => {
 	chrome.tabs.get(parseInt(tabId), async (tab) => {
 		let muted = !tab.mutedInfo.muted;
 		await chrome.tabs.update(parseInt(tabId), { muted });
-
-		document.getElementById(tabId).classList.toggle('inactive');
 	});
 };
 
-// document.dispatchEvent(
-// 	new KeyboardEvent('keydown', {
-// 		key: 'N',
-// 		keyCode: 78,
-// 		which: 78,
-// 		shiftKey: true,
-// 		ctrlKey: false,
-// 		metaKey: false,
-// 	})
-// );
+const prev = (tabId) => {
+	const id = tabId.substring(2, tabId.length);
+	chrome.tabs.executeScript(parseInt(id), {
+		code: `
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'P',
+        keyCode: 80,
+        which: 80,
+        shiftKey: true,
+        ctrlKey: false,
+        metaKey: false,
+      })
+    );
+		`,
+	});
+};
+
+const next = (tabId) => {
+	const id = tabId.substring(2, tabId.length);
+	chrome.tabs.executeScript(parseInt(id), {
+		code: `
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'N',
+        keyCode: 78,
+        which: 78,
+        shiftKey: true,
+        ctrlKey: false,
+        metaKey: false,
+      })
+    );
+		`,
+	});
+};
 
 const togglePlay = (tabId) => {
 	const id = tabId.substring(2, tabId.length);
@@ -35,15 +58,9 @@ const togglePlay = (tabId) => {
     );	
 		`,
 	});
-	document.getElementById(tabId).classList.toggle('inactive');
 };
 
 const getHtml = (tab) => {
-	let temp = '';
-	if (tab.mutedInfo.muted) {
-		temp = 'inactive';
-	}
-
 	const txt = `
 	<div class="tab-item">
 		<div class="tab-title">${tab.title}</div>
@@ -57,11 +74,6 @@ const getHtml = (tab) => {
 };
 
 const getHtmlForYT = (tab) => {
-	let temp = '';
-	if (tab.mutedInfo.muted) {
-		temp = 'inactive';
-	}
-
 	const txt = `
 	<div class="tab-item youtube-item">
 		<div class="tab-title">${tab.title}</div>
@@ -77,7 +89,7 @@ const getHtmlForYT = (tab) => {
 	return txt;
 };
 
-var tabsContainer = document.getElementById('tabs');
+const tabsContainer = document.getElementById('tabs');
 
 chrome.tabs.query({}, function (tabs) {
 	for (let i = 0; i < tabs.length; i++) {
@@ -102,6 +114,22 @@ chrome.tabs.query({}, function (tabs) {
 		const button = buttonsPlay[i];
 		button.addEventListener('click', () => {
 			togglePlay(button.id);
+		});
+	}
+
+	const nextButtons = document.getElementsByClassName('next');
+	for (let i = 0; i < nextButtons.length; i++) {
+		const button = nextButtons[i];
+		button.addEventListener('click', () => {
+			next(button.id);
+		});
+	}
+
+	const prevButtons = document.getElementsByClassName('prev');
+	for (let i = 0; i < prevButtons.length; i++) {
+		const button = prevButtons[i];
+		button.addEventListener('click', () => {
+			prev(button.id);
 		});
 	}
 });
