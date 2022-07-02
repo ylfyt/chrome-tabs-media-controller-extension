@@ -1,5 +1,6 @@
 * {
 	margin: 0;
+	padding: 0;
 }
 
 body {
@@ -8,84 +9,76 @@ body {
 	background-color: #073b4c;
 }
 
-.container {
-	padding: 15px 15px 0 15px;
+::-webkit-scrollbar {
+	width: 3px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #ff1e56;
 }
 
-.button-container {
+::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.container {
+	padding: 10px;
+}
+
+.tabs {
 	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 
 .tab-item {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 10px;
-	margin-bottom: 15px;
-	border-radius: 10px;
-	background-color: #ffd166;
-	box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
-	height: 25px;
+	flex-direction: column;
+	gap: 4px;
+	padding: 8px 10px;
+	border-radius: 6px;
+	background-color: #2e6d81;
+	color: white;
+	opacity: 80%;
+}
+
+.tab-item:hover {
+	opacity: 100%;
 }
 
 .youtube-item {
 	background-color: #ff1e56;
 }
 
+.button-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 .tab-title {
 	margin-right: 10px;
-	font-size: 14px;
+	font-size: 10px;
 	font-weight: 600;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.mute-toggle {
-	border: none;
-	width: 40px;
-	height: 25px;
-	box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
-	border-radius: 5px;
-	color: white;
-	min-width: 40px;
-	min-height: 25px;
-	background-color: #06d6a0;
+.youtube-controller {
+	display: flex;
+	gap: 8px;
 }
 
-.play-toggle {
-	border: none;
-	width: 40px;
-	height: 25px;
-	box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
-	border-radius: 5px;
-	color: white;
-	min-width: 40px;
-	min-height: 25px;
-	background-color: #06d6a0;
-	margin-right: 10px;
-}
-
-.play-toggle:hover {
+.control {
 	cursor: pointer;
+	color: #ff1e56;
+	border-radius: 4px;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2px 10px;
 }
 
-.play-toggle:active {
-	box-shadow: none;
-}
-
-.mute-toggle:hover {
-	cursor: pointer;
-}
-
-.mute-toggle:active {
-	box-shadow: none;
-}
-
-.active {
-	background-color: #06d6a0;
-}
-
-.inactive {
-	background-color: #969797;
+.control:active {
+	opacity: 50%;
 }

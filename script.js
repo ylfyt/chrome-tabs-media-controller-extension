@@ -7,21 +7,32 @@ const toggleMute = (tabId) => {
 	});
 };
 
+// document.dispatchEvent(
+// 	new KeyboardEvent('keydown', {
+// 		key: 'N',
+// 		keyCode: 78,
+// 		which: 78,
+// 		shiftKey: true,
+// 		ctrlKey: false,
+// 		metaKey: false,
+// 	})
+// );
+
 const togglePlay = (tabId) => {
 	const id = tabId.substring(2, tabId.length);
 	chrome.tabs.executeScript(parseInt(id), {
 		code: `
-			document.dispatchEvent(
-				new KeyboardEvent('keydown', {
-					key: 'k',
-					keyCode: 75,
-					code: 'KeyK',
-					which: 75,
-					shiftKey: false,
-					ctrlKey: false,
-					metaKey: false,
-				})
-			);	
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'k',
+        keyCode: 75,
+        code: 'KeyK',
+        which: 75,
+        shiftKey: false,
+        ctrlKey: false,
+        metaKey: false,
+      })
+    );	
 		`,
 	});
 	document.getElementById(tabId).classList.toggle('inactive');
@@ -36,9 +47,10 @@ const getHtml = (tab) => {
 	const txt = `
 	<div class="tab-item">
 		<div class="tab-title">${tab.title}</div>
-		
 		<div class="button-container">
-			<button id="${tab.id}" type="button" class="mute-toggle ${temp}">M</button>
+      <div class="youtube-controller">
+      </div>
+			<button id="${tab.id}" type="button" class="mute-toggle control">&#9888;</button>
 		</div>
 	</div>`;
 	return txt;
@@ -54,8 +66,12 @@ const getHtmlForYT = (tab) => {
 	<div class="tab-item youtube-item">
 		<div class="tab-title">${tab.title}</div>
 		<div class="button-container">
-			<button id="p:${tab.id}" type="button" class="play-toggle ${temp}">P</button>
-			<button id="${tab.id}" type="button" class="mute-toggle ${temp}">M</button>
+      <div class="youtube-controller">
+        <button id="s:${tab.id}" type="button" class="control prev">&#10094;</button>
+        <button id="p:${tab.id}" type="button" class="play-toggle control">&#9737;</button>
+        <button id="n:${tab.id}" type="button" class="control next">&#10095;</button>
+      </div>
+			<button id="${tab.id}" type="button" class="mute-toggle control">&#9888;</button>
 		</div>
 	</div>`;
 	return txt;
