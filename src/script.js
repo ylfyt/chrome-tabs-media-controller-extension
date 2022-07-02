@@ -73,13 +73,13 @@ const getHtml = (tab) => {
 	return txt;
 };
 
-const getHtmlForYT = (tab) => {
+const getHtmlForYT = (tab, prev = false) => {
 	const txt = `
 	<div class="tab-item youtube-item">
 		<div class="tab-title">${tab.title}</div>
 		<div class="button-container">
       <div class="youtube-controller">
-        <button id="s:${tab.id}" type="button" class="control prev">&#10094;</button>
+        <button id="s:${tab.id}" type="button" class="control prev ${prev ? 'visible' : 'invisible'}">&#10094;</button>
         <button id="p:${tab.id}" type="button" class="play-toggle control">&#9737;</button>
         <button id="n:${tab.id}" type="button" class="control next">&#10095;</button>
       </div>
@@ -95,7 +95,11 @@ chrome.tabs.query({}, function (tabs) {
 	for (let i = 0; i < tabs.length; i++) {
 		const tab = tabs[i];
 		if (tab.url.includes('youtube.com/watch?v=')) {
-			tabsContainer.innerHTML += getHtmlForYT(tab);
+			if (tab.url.includes('list=')) {
+				tabsContainer.innerHTML += getHtmlForYT(tab, true);
+			} else {
+				tabsContainer.innerHTML += getHtmlForYT(tab);
+			}
 		} else {
 			tabsContainer.innerHTML += getHtml(tab);
 		}

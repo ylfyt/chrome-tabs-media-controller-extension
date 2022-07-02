@@ -82,3 +82,11 @@ body {
 .control:active {
 	opacity: 50%;
 }
+
+.visible {
+	visibility: visible;
+}
+
+.invisible {
+	visibility: hidden;
+}
