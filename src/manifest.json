@@ -1,7 +1,7 @@
 {
-	"manifest_version": 2,
-	"name": "Tabs Audio Controller",
-	"version": "2.1.0",
+  "manifest_version": 3,
+  "name": "Tabs Audio Controller",
+  "version": "3.0.0",
   "commands": {
     "play-toggle": {
       "suggested_key": "Ctrl+Space",
@@ -11,10 +11,18 @@
   "background": {
     "service_worker": "background.js"
   },
-	"browser_action": {
-		"default_popup": "index.html",
-		"default_title": "Tabs",
-		"default_icon": "icon.png"
-	},
-	"permissions": ["activeTab", "tabs", "<all_urls>"]
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Tabs",
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ]
 }

@@ -7,56 +7,67 @@ const toggleMute = (tabId) => {
 
 const prev = (tabId) => {
 	const id = tabId.substring(2, tabId.length);
-	chrome.tabs.executeScript(parseInt(id), {
-		code: `
-    document.dispatchEvent(
-      new KeyboardEvent('keydown', {
-        key: 'P',
-        keyCode: 80,
-        which: 80,
-        shiftKey: true,
-        ctrlKey: false,
-        metaKey: false,
-      })
-    );
-		`,
+
+	chrome.scripting.executeScript({
+		func: () => {
+			document.dispatchEvent(
+				new KeyboardEvent('keydown', {
+					key: 'P',
+					keyCode: 80,
+					which: 80,
+					shiftKey: true,
+					ctrlKey: false,
+					metaKey: false,
+				})
+			);
+		},
+		target: {
+			tabId: parseInt(id),
+		},
 	});
 };
 
 const next = (tabId) => {
 	const id = tabId.substring(2, tabId.length);
-	chrome.tabs.executeScript(parseInt(id), {
-		code: `
-    document.dispatchEvent(
-      new KeyboardEvent('keydown', {
-        key: 'N',
-        keyCode: 78,
-        which: 78,
-        shiftKey: true,
-        ctrlKey: false,
-        metaKey: false,
-      })
-    );
-		`,
+	chrome.scripting.executeScript({
+		func: () => {
+			document.dispatchEvent(
+				new KeyboardEvent('keydown', {
+					key: 'N',
+					keyCode: 78,
+					which: 78,
+					shiftKey: true,
+					ctrlKey: false,
+					metaKey: false,
+				})
+			);
+		},
+		target: {
+			tabId: parseInt(id),
+		},
 	});
 };
 
 const togglePlay = (tabId) => {
 	const id = tabId.substring(2, tabId.length);
-	chrome.tabs.executeScript(parseInt(id), {
-		code: `
-    document.dispatchEvent(
-      new KeyboardEvent('keydown', {
-        key: 'k',
-        keyCode: 75,
-        code: 'KeyK',
-        which: 75,
-        shiftKey: false,
-        ctrlKey: false,
-        metaKey: false,
-      })
-    );	
-		`,
+
+	chrome.scripting.executeScript({
+		func: () => {
+			document.dispatchEvent(
+				new KeyboardEvent('keydown', {
+					key: 'k',
+					keyCode: 75,
+					code: 'KeyK',
+					which: 75,
+					shiftKey: false,
+					ctrlKey: false,
+					metaKey: false,
+				})
+			);
+		},
+		target: {
+			tabId: parseInt(id),
+		},
 	});
 };
 
