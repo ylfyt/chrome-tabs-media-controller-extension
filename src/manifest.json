@@ -4,7 +4,7 @@
   "version": "3.0.0",
   "commands": {
     "play-toggle": {
-      "suggested_key": "Ctrl+Space",
+      "suggested_key": "Alt+C",
       "description": "Play Pause Toggle"
     }
   },
