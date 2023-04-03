@@ -30,31 +30,41 @@ const prev = (tabId) => {
 const up = (tabId) => {
 	const id = tabId.substring(2, tabId.length);
 
-	chrome.scripting.executeScript({
-		func: () => {
-			const video = document.getElementById('movie_player');
-			video.setVolume(video.getVolume() + 5);
-		},
-		target: {
-			tabId: parseInt(id),
-		},
-		world: 'MAIN',
-	});
+	chrome.scripting
+		.executeScript({
+			func: () => {
+				const video = document.getElementById('movie_player');
+				video.setVolume(video.getVolume() + 5);
+				return video.getVolume();
+			},
+			target: {
+				tabId: parseInt(id),
+			},
+			world: 'MAIN',
+		})
+		.then((res) => {
+			document.getElementById('vn:' + id).innerText = res[0].result;
+		});
 };
 
 const down = (tabId) => {
 	const id = tabId.substring(2, tabId.length);
 
-	chrome.scripting.executeScript({
-		func: () => {
-			const video = document.getElementById('movie_player');
-			video.setVolume(video.getVolume() - 5);
-		},
-		target: {
-			tabId: parseInt(id),
-		},
-		world: 'MAIN',
-	});
+	chrome.scripting
+		.executeScript({
+			func: () => {
+				const video = document.getElementById('movie_player');
+				video.setVolume(video.getVolume() - 5);
+				return video.getVolume();
+			},
+			target: {
+				tabId: parseInt(id),
+			},
+			world: 'MAIN',
+		})
+		.then((res) => {
+			document.getElementById('vn:' + id).innerText = res[0].result;
+		});
 };
 
 const next = (tabId) => {
@@ -114,7 +124,7 @@ const getHtml = (tab) => {
 	return txt;
 };
 
-const getHtmlForYT = (tab, prev = false) => {
+const getHtmlForYT = (tab, vol, prev = false) => {
 	const txt = `
 	<div class="tab-item youtube-item">
 		<div class="tab-title">${tab.title}</div>
@@ -125,6 +135,7 @@ const getHtmlForYT = (tab, prev = false) => {
         <button id="n:${tab.id}" type="button" class="control next">&#10095;</button>
 
         <button id="d:${tab.id}" type="button" class="control volume-down">-</button>
+        <div style="margin-top: auto;margin-bottom: auto;" id="vn:${tab.id}">${vol}</div>
         <button id="u:${tab.id}" type="button" class="control volume-up">+</button>
       </div>
 			<button id="${tab.id}" type="button" class="mute-toggle control">&#9888;</button>
@@ -135,15 +146,27 @@ const getHtmlForYT = (tab, prev = false) => {
 
 const tabsContainer = document.getElementById('tabs');
 
-chrome.tabs.query({}, function (tabs) {
+chrome.tabs.query({}, async function (tabs) {
 	for (let i = 0; i < tabs.length; i++) {
 		const tab = tabs[i];
 		if (tab.url.includes('youtube.com/watch?')) {
-			if (tab.url.includes('list=')) {
-				tabsContainer.innerHTML += getHtmlForYT(tab, true);
-			} else {
-				tabsContainer.innerHTML += getHtmlForYT(tab);
-			}
+			try {
+				const res = await chrome.scripting.executeScript({
+					func: () => {
+						const video = document.getElementById('movie_player');
+						return video.getVolume();
+					},
+					target: { tabId: tab.id },
+					world: 'MAIN',
+				});
+				const vol = res?.[0].result;
+
+				if (tab.url.includes('list=')) {
+					tabsContainer.innerHTML += getHtmlForYT(tab, vol, true);
+				} else {
+					tabsContainer.innerHTML += getHtmlForYT(tab, vol);
+				}
+			} catch (error) {}
 		} else {
 			tabsContainer.innerHTML += getHtml(tab);
 		}
