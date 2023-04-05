@@ -43,7 +43,7 @@ const up = (tabId) => {
 			world: 'MAIN',
 		})
 		.then((res) => {
-			document.getElementById('vn:' + id).innerText = res[0].result;
+			document.getElementById('vn:' + id).innerText = Math.round(res[0].result);
 		});
 };
 
@@ -63,7 +63,7 @@ const down = (tabId) => {
 			world: 'MAIN',
 		})
 		.then((res) => {
-			document.getElementById('vn:' + id).innerText = res[0].result;
+			document.getElementById('vn:' + id).innerText = Math.round(res[0].result);
 		});
 };
 
@@ -159,7 +159,7 @@ chrome.tabs.query({}, async function (tabs) {
 					target: { tabId: tab.id },
 					world: 'MAIN',
 				});
-				const vol = res?.[0].result;
+				const vol = Math.round(res?.[0].result);
 
 				if (tab.url.includes('list=')) {
 					tabsContainer.innerHTML += getHtmlForYT(tab, vol, true);
