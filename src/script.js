@@ -34,7 +34,7 @@ const up = (tabId) => {
 		.executeScript({
 			func: () => {
 				const video = document.getElementById('movie_player');
-				video.setVolume(video.getVolume() + 5);
+				video.setVolume(video.getVolume() + 2);
 				return video.getVolume();
 			},
 			target: {
@@ -54,7 +54,7 @@ const down = (tabId) => {
 		.executeScript({
 			func: () => {
 				const video = document.getElementById('movie_player');
-				video.setVolume(video.getVolume() - 5);
+				video.setVolume(video.getVolume() - 2);
 				return video.getVolume();
 			},
 			target: {
@@ -118,7 +118,7 @@ const getHtml = (tab) => {
 		<div class="button-container">
       <div class="youtube-controller">
       </div>
-			<button id="${tab.id}" type="button" class="mute-toggle control">&#9888;</button>
+			<button title="mute/unmute" id="${tab.id}" type="button" class="mute-toggle control">&#9888;</button>
 		</div>
 	</div>`;
 	return txt;
@@ -127,20 +127,24 @@ const getHtml = (tab) => {
 const getHtmlForYT = (tab, vol, prev = false) => {
 	const txt = `
 	<div class="tab-item youtube-item">
-		<div class="tab-title">${tab.title}</div>
-		<div class="button-container">
-      <div class="youtube-controller">
-        <button id="s:${tab.id}" type="button" class="control prev ${prev ? 'visible' : 'invisible'}">&#10094;</button>
-        <button id="p:${tab.id}" type="button" class="play-toggle control">&#9737;</button>
-        <button id="n:${tab.id}" type="button" class="control next">&#10095;</button>
+    <div style="display: flex; justify-content: space-between">
+      <div class="tab-title">${tab.title}</div>
+      <button title="mute/unmute" id="${tab.id}" type="button" class="mute-toggle control">&#9888;</button>
+    </div>
 
-        <button id="d:${tab.id}" type="button" class="control volume-down">-</button>
-        <div style="margin-top: auto;margin-bottom: auto;" id="vn:${tab.id}">${vol}</div>
-        <button id="u:${tab.id}" type="button" class="control volume-up">+</button>
+    <div class="button-container">
+      <div class="youtube-controller">
+        <button title="prev" id="s:${tab.id}" type="button" class="control prev ${prev ? 'visible' : 'invisible'}">&#10094;</button>
+        <button title="play/pause" id="p:${tab.id}" type="button" class="play-toggle control">&#9737;</button>
+        <button title="next" id="n:${tab.id}" type="button" class="control next">&#10095;</button>
       </div>
-			<button id="${tab.id}" type="button" class="mute-toggle control">&#9888;</button>
-		</div>
-	</div>`;
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button title="volume down" id="d:${tab.id}" type="button" class="control volume-down">-</button>
+        <div id="vn:${tab.id}">${vol}</div>
+        <button title="volume up" id="u:${tab.id}" type="button" class="control volume-up">+</button>
+      </div>
+    </div>
+  </div>`;
 	return txt;
 };
 
