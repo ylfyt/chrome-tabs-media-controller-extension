@@ -153,26 +153,29 @@ const tabsContainer = document.getElementById('tabs');
 chrome.tabs.query({}, async function (tabs) {
 	for (let i = 0; i < tabs.length; i++) {
 		const tab = tabs[i];
-		if (tab.url.includes('youtube.com/watch?')) {
-			try {
-				const res = await chrome.scripting.executeScript({
-					func: () => {
-						const video = document.getElementById('movie_player');
-						return video.getVolume();
-					},
-					target: { tabId: tab.id },
-					world: 'MAIN',
-				});
-				const vol = Math.round(res?.[0].result);
-
-				if (tab.url.includes('list=')) {
-					tabsContainer.innerHTML += getHtmlForYT(tab, vol, true);
-				} else {
-					tabsContainer.innerHTML += getHtmlForYT(tab, vol);
-				}
-			} catch (error) {}
-		} else {
+		if (!tab.url.includes('youtube.com/watch') && !tab.url.includes('youtube.com/shorts')) {
 			tabsContainer.innerHTML += getHtml(tab);
+			continue;
+		}
+
+		try {
+			const res = await chrome.scripting.executeScript({
+				func: () => {
+					const video = document.getElementById('movie_player');
+					return video.getVolume();
+				},
+				target: { tabId: tab.id },
+				world: 'MAIN',
+			});
+			const vol = Math.round(res?.[0].result);
+
+			if (tab.url.includes('list=')) {
+				tabsContainer.innerHTML += getHtmlForYT(tab, vol, true);
+			} else {
+				tabsContainer.innerHTML += getHtmlForYT(tab, vol);
+			}
+		} catch (error) {
+			console.log('err', error);
 		}
 	}
 
